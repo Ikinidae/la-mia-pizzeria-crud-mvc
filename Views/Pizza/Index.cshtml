@@ -37,6 +37,14 @@ else
                     <td>                        
                         <a class="btn btn-info" asp-area="" asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id">Dettagli Pizza</a>
                     </td>
+                    <td>
+                        <a class="btn btn-warning" asp-area="" asp-controller="Pizza" asp-action="Update" asp-route-id="@pizza.Id">Modifica Pizza</a>
+                    </td>
+                    <td>
+                        <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
+                            <button type="submit" class="btn btn-danger"> Elimina Pizza </button>
+                        </form>
+                    </td>
                 </tr>
             }
         </tbody>
