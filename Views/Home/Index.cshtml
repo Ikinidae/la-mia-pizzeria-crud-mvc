@@ -1,0 +1,21 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1>Pizzeria</h1>
+</div>
+
+<div class="d-flex justify-content-center flex-wrap">
+    @for (int i = 1; i < 9; i++)
+    {
+        <div class="card m-2" style="width: 18rem;">
+            <img src="https://img.pizza/350/400" class="card-img-top" alt="pizza">
+            <div class="card-body">
+                <h5 class="card-title">Pizza @i</h5>
+                <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lectus turpis, ultrices ut mi a, eleifend accumsan libero. Curabitur porta mollis lectus id finibus.</p>
+                <p class="card-text">12.00€</p>
+            </div>
+        </div>
+    }
+</div>
