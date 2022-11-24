@@ -1,8 +1,11 @@
-﻿using la_mia_pizzeria_static.Data;
+﻿using Azure;
+using la_mia_pizzeria_static.Data;
 using la_mia_pizzeria_static.Models;
 using la_mia_pizzeria_static.Models.Form;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 
 namespace la_mia_pizzeria_static.Controllers
@@ -25,7 +28,7 @@ namespace la_mia_pizzeria_static.Controllers
 
         public IActionResult Details(int id)
         {
-            Pizza pizza = db.Pizzas.Where(p => p.Id == id).FirstOrDefault();
+            Pizza pizza = db.Pizzas.Where(p => p.Id == id).Include("Category").Include("Ingredients").FirstOrDefault();
 
             return View(pizza);
         }
@@ -37,6 +40,14 @@ namespace la_mia_pizzeria_static.Controllers
             formData.Pizza = new Pizza();
             formData.Categories = db.Categories.ToList();
 
+            formData.Ingredients = new List<SelectListItem>();
+            List<Ingredient> ingredientsList = db.Ingredients.ToList();
+
+            foreach (Ingredient ingredient in ingredientsList)
+            {
+                formData.Ingredients.Add(new SelectListItem(ingredient.Name, ingredient.Id.ToString()));
+            }
+
             return View(formData);
         }
 
@@ -47,6 +58,15 @@ namespace la_mia_pizzeria_static.Controllers
             if (!ModelState.IsValid)
             {
                 formData.Categories = db.Categories.ToList();
+
+                formData.Ingredients = new List<SelectListItem>();
+                List<Ingredient> ingredientList = db.Ingredients.ToList();
+
+                foreach (Ingredient ingredient in ingredientList)
+                {
+                    formData.Ingredients.Add(new SelectListItem(ingredient.Name, ingredient.Id.ToString()));
+                }
+                
                 return View(formData);
 
                 //if (ModelState["Price"].Errors.Count > 0)
@@ -54,6 +74,15 @@ namespace la_mia_pizzeria_static.Controllers
                 //    ModelState["Price"].Errors.Clear();
                 //    ModelState["Price"].Errors.Add("Il prezzo deve essere compreso tra 1 e 30");
                 //}
+            }
+
+            //associazione degli ingredienti selezionat al modello
+            formData.Pizza.Ingredients = new List<Ingredient>();
+
+            foreach (int ingredientId in formData.SelectedIngredients)
+            {
+                Ingredient ingredient = db.Ingredients.Where(t => t.Id == ingredientId).FirstOrDefault();
+                formData.Pizza.Ingredients.Add(ingredient);
             }
 
             db.Pizzas.Add(formData.Pizza);

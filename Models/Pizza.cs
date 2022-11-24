@@ -27,7 +27,7 @@ namespace la_mia_pizzeria_static.Models
 
         public int CategoryId { get; set; }
         public Category? Category { get; set; }
-
+        public List<Ingredient>? Ingredients { get; set; }
 
         //costruttore
         public Pizza (string name, string description, string image, float price)
