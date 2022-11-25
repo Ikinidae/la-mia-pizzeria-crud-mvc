@@ -5,7 +5,7 @@ using Microsoft.SqlServer.Server;
 
 namespace la_mia_pizzeria_static.Models.Repository
 {
-    public class DbPizzaRepository
+    public class DbPizzaRepository : IDbPizzaRepository
     {
         private PizzeriaDbContext db;
         public DbPizzaRepository() : base()
@@ -23,7 +23,7 @@ namespace la_mia_pizzeria_static.Models.Repository
             return db.Pizzas.Where(p => p.Id == id).Include("Category").Include("Ingredients").FirstOrDefault();
         }
 
-        public void Create (Pizza pizza, List<int> selectedIngredients)
+        public void Create(Pizza pizza, List<int> selectedIngredients)
         {
             //associazione degli ingredienti selezionat al modello
             pizza.Ingredients = new List<Ingredient>();
@@ -38,8 +38,8 @@ namespace la_mia_pizzeria_static.Models.Repository
             db.SaveChanges();
         }
 
-        public void Update (Pizza pizza, Pizza formData, List<int> selectedIngredients)
-        {                       
+        public void Update(Pizza pizza, Pizza formData, List<int> selectedIngredients)
+        {
             if (selectedIngredients == null)
             {
                 selectedIngredients = new List<int>();
