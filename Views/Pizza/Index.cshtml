@@ -17,6 +17,7 @@ else
                 <th>Descrizione</th>
                 <th>Immagine</th>
                 <th>Prezzo</th>
+                <th>Azioni</th>
             </tr>
         </thead>
         <tbody>
@@ -35,14 +36,10 @@ else
                         @pizza.Price €
                     </td>
                     <td>                        
-                        <a class="btn btn-info" asp-area="" asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id">Dettagli Pizza</a>
-                    </td>
-                    <td>
-                        <a class="btn btn-warning" asp-area="" asp-controller="Pizza" asp-action="Update" asp-route-id="@pizza.Id">Modifica Pizza</a>
-                    </td>
-                    <td>
+                        <a class="m-2 btn btn-info" asp-area="" asp-controller="Pizza" asp-action="Details" asp-route-id="@pizza.Id">Dettagli Pizza</a>
+                        <a class="m-2 btn btn-warning" asp-area="" asp-controller="Pizza" asp-action="Update" asp-route-id="@pizza.Id">Modifica Pizza</a>
                         <form asp-controller="Pizza" asp-action="Delete" asp-route-id="@pizza.Id" method="post">
-                            <button type="submit" class="btn btn-danger"> Elimina Pizza </button>
+                            <button type="submit" class="m-2  btn btn-danger"> Elimina Pizza </button>
                         </form>
                     </td>
                 </tr>
